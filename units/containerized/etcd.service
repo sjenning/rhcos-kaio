@@ -4,7 +4,7 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStartPre=-/usr/bin/podman rm -f etcd-0
-ExecStart=/usr/bin/podman run --name=etcd-0 -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti registry.lab.variantweb.net/poc/etcd:v3.4.0 /usr/local/bin/etcd \
+ExecStart=/usr/bin/podman run --name=etcd-0 -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti k8s.gcr.io/etcd:v3.4.0 /usr/local/bin/etcd \
   --name=etcd-0 \
   --trusted-ca-file=/var/lib/kubernetes/ca.pem \
   --cert-file=/var/lib/kubernetes/etcd-server.pem \
