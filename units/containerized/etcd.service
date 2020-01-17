@@ -1,0 +1,30 @@
+[Unit]
+Description=etcd
+Documentation=https://github.com/coreos
+
+[Service]
+ExecStartPre=-/usr/bin/podman rm -f etcd-0
+ExecStart=/usr/bin/podman run --name=etcd-0 -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti registry.lab.variantweb.net/poc/etcd:v3.4.0 /usr/local/bin/etcd \
+  --name=etcd-0 \
+  --trusted-ca-file=/var/lib/kubernetes/ca.pem \
+  --cert-file=/var/lib/kubernetes/etcd-server.pem \
+  --key-file=/var/lib/kubernetes/etcd-server-key.pem \
+  --peer-trusted-ca-file=/var/lib/kubernetes/ca.pem \
+  --peer-cert-file=/var/lib/kubernetes/etcd-0.pem \
+  --peer-key-file=/var/lib/kubernetes/etcd-0-key.pem \
+  --peer-client-cert-auth \
+  --client-cert-auth \
+  --initial-advertise-peer-urls https://127.0.0.1:2380 \
+  --listen-peer-urls https://127.0.0.1:2380 \
+  --listen-client-urls https://127.0.0.1:2379 \
+  --advertise-client-urls https://127.0.0.1:2379 \
+  --initial-cluster-token etcd-cluster-0 \
+  --initial-cluster etcd-0=https://127.0.0.1:2380 \
+  --initial-cluster-state new \
+  --data-dir=/var/lib/etcd
+ExecStop=/usr/bin/podman rm -f etcd-0
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

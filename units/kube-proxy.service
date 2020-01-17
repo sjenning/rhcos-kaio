@@ -1,0 +1,13 @@
+[Unit]
+Description=Kubernetes Kube Proxy
+Documentation=https://github.com/kubernetes/kubernetes
+
+[Service]
+ExecStartPre=/usr/sbin/modprobe br_netfilter
+ExecStart=/usr/local/bin/hyperkube kube-proxy \
+  --config=/etc/kubernetes/config/kube-proxy.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

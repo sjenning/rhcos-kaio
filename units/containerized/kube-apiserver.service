@@ -1,0 +1,30 @@
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/kubernetes/kubernetes
+Requires=etcd.service
+After=etcd.service
+
+[Service]
+ExecStartPre=-/usr/bin/podman rm -f kube-apiserver
+ExecStart=/usr/bin/podman run --name=kube-apiserver -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti registry.lab.variantweb.net/poc/hyperkube:v1.14.6 kube-apiserver \
+  --allow-privileged=true \
+  --authorization-mode=Node,RBAC \
+  --client-ca-file=/var/lib/kubernetes/ca.pem \
+  --tls-cert-file=/var/lib/kubernetes/kube-apiserver-server.pem \
+  --tls-private-key-file=/var/lib/kubernetes/kube-apiserver-server-key.pem \
+  --etcd-cafile=/var/lib/kubernetes/ca.pem \
+  --etcd-certfile=/var/lib/kubernetes/kube-apiserver-etcd.pem \
+  --etcd-keyfile=/var/lib/kubernetes/kube-apiserver-etcd-key.pem \
+  --etcd-servers=https://127.0.0.1:2379 \
+  --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \
+  --kubelet-client-certificate=/var/lib/kubernetes/kube-apiserver-kubelet.pem \
+  --kubelet-client-key=/var/lib/kubernetes/kube-apiserver-kubelet-key.pem \
+  --service-account-key-file=/var/lib/kubernetes/service-account.pem \
+  --service-cluster-ip-range=172.30.0.0/16 \
+  --v=2
+ExecStop=/usr/bin/podman rm -f kube-apiserver
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

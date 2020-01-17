@@ -1,0 +1,21 @@
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/kubernetes/kubernetes
+Requires=kube-apiserver.service
+After=kube-apiserver.service
+
+[Service]
+ExecStartPre=-/usr/bin/podman rm -f kube-controller-manager
+ExecStart=/usr/bin/podman run --name=kube-controller-manager -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti registry.lab.variantweb.net/poc/hyperkube:v1.14.6 kube-controller-manager \
+  --kubeconfig=/var/lib/kubernetes/kube-controller-manager.kubeconfig \
+  --root-ca-file=/var/lib/kubernetes/ca.pem \
+  --service-account-private-key-file=/var/lib/kubernetes/service-account-key.pem \
+  --service-cluster-ip-range=172.30.0.0/16 \
+  --use-service-account-credentials=true \
+  --v=2
+ExecStop=/usr/bin/podman rm -f kube-controller-manager
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
