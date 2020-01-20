@@ -1,6 +1,9 @@
 # rhcos-kaio
 The project generates an ignition file that, when injected into RHCOS, creates an all-in-one Kubernetes cluster
 
+Latest RHCOS Images
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/latest/
+
 ## Prereqs
 * openssl
 * cfssl
