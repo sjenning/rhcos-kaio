@@ -6,7 +6,7 @@ After=kube-apiserver.service
 
 [Service]
 ExecStartPre=-/usr/bin/podman rm -f kube-scheduler
-ExecStart=/usr/bin/podman run --name=kube-scheduler -v /var/lib/kubernetes:/var/lib/kubernetes -v /etc/kubernetes/config:/etc/kubernetes/config --privileged --net=host -ti k8s.gcr.io/hyperkube:v1.17.1 kube-scheduler \
+ExecStart=/usr/bin/podman run --name=kube-scheduler -v /var/lib/kubernetes:/var/lib/kubernetes -v /etc/kubernetes/config:/etc/kubernetes/config --privileged --net=host -ti k8s.gcr.io/hyperkube:v1.16.2 kube-scheduler \
   --config=/etc/kubernetes/config/kube-scheduler.yaml
 ExecStop=/usr/bin/podman rm -f kube-scheduler
 Restart=on-failure

@@ -1,4 +1,6 @@
 final.ign
 base.ign
 bootstrap-append.ign
-fake-root
+fake-root/var/lib/kubernetes
+fake-root/home
+fake-root/root

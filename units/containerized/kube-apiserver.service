@@ -6,7 +6,7 @@ After=etcd.service
 
 [Service]
 ExecStartPre=-/usr/bin/podman rm -f kube-apiserver
-ExecStart=/usr/bin/podman run --name=kube-apiserver -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti k8s.gcr.io/hyperkube:v1.17.1 kube-apiserver \
+ExecStart=/usr/bin/podman run --name=kube-apiserver -v /var/lib/kubernetes:/var/lib/kubernetes --privileged --net=host -ti k8s.gcr.io/hyperkube:v1.16.2 kube-apiserver \
   --allow-privileged=true \
   --authorization-mode=Node,RBAC \
   --client-ca-file=/var/lib/kubernetes/ca.pem \
