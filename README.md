@@ -10,7 +10,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/latest/
 
 ## Usage
 * `cp base.ign.example base.ign` and edit `base.ign` with your ssh key
-* update `EXTERNAL_API_HOSTNAME` in `make-pki.sh` to the DNS name of your AIO (this is so the apiserver cert can include that name)
+* update `EXTERNAL_API_HOSTNAME` in `make-pki.sh` to the DNS name of your AIO (this is so the apiserver cert can include that name and the `admin.kubeconfig` will contact the apiserver at this name)
 * run `make-ignition` to create the `final.ign` file
 * inject the final.ign into an RHCOS machine directly, or use `bootstrap-append.ign.example` to append the ignition file from another host if the injection mechanism does not allow large files.
 
