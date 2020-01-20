@@ -16,3 +16,6 @@ The project generates an ignition file that, when injected into RHCOS, creates a
 * run `oc get nodes` to make sure you can access the AIO
 * create the CoreDNS deployment with `oc apply -f coredns.yaml`
 * verify the deployment is Running with `oc get pod -n kube-system`
+
+## Clean up
+`make-ignition.sh` will reuse certs if they already exist in `fake-root/var/lib/kubernetes`. To start clean, `rm -rf fake-root/var/lib/kubernetes final.ign`.
